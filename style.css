@@ -1,0 +1,441 @@
+/* ===== 全局重置 & 变量 ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f0f1a;
+  --card-bg: #1a1a2e;
+  --panel-bg: #16213e;
+  --accent: #e94560;
+  --accent2: #0f3460;
+  --green: #4ecca3;
+  --yellow: #f7d716;
+  --text: #e0e0e0;
+  --text-dim: #888;
+  --correct: #4ecca3;
+  --wrong: #e94560;
+  --current: #f7d716;
+  --radius: 12px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 40px;
+}
+
+/* ===== 头部 ===== */
+header {
+  text-align: center;
+  padding: 40px 0 20px;
+}
+
+header h1 {
+  font-size: 2.4rem;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--text-dim);
+  font-size: 1rem;
+}
+
+/* ===== 主区域 ===== */
+main {
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== 难度选择 ===== */
+.difficulty-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+}
+
+.difficulty-bar span {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.diff-btn {
+  padding: 6px 18px;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  background: var(--panel-bg);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+}
+
+.diff-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.diff-btn.active {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(78, 204, 163, 0.1);
+}
+
+/* ===== 统计面板 ===== */
+.stats-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 18px 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 6px;
+  transition: color 0.3s;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+/* ===== 进度条 ===== */
+.progress-wrap {
+  height: 6px;
+  background: var(--panel-bg);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--green), var(--accent));
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* ===== 文字展示区 ===== */
+.text-display {
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  font-size: 1.25rem;
+  line-height: 2;
+  letter-spacing: 0.5px;
+  min-height: 120px;
+  word-break: break-all;
+  box-shadow: var(--shadow);
+  position: relative;
+  user-select: none;
+}
+
+/* 字符状态颜色 */
+.text-display .char {
+  display: inline;
+  transition: color 0.1s, background 0.1s;
+}
+
+.char.correct {
+  color: var(--correct);
+}
+
+.char.wrong {
+  color: var(--wrong);
+  background: rgba(233, 69, 96, 0.15);
+  border-radius: 2px;
+}
+
+.char.current {
+  color: var(--current);
+  border-bottom: 2px solid var(--current);
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { border-color: var(--current); }
+  50% { border-color: transparent; }
+}
+
+/* ===== 输入框 ===== */
+.input-wrap {
+  position: relative;
+}
+
+#inputBox {
+  width: 100%;
+  min-height: 100px;
+  background: var(--card-bg);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 1.1rem;
+  padding: 18px 20px;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: 'Consolas', 'Courier New', monospace;
+  line-height: 1.7;
+}
+
+#inputBox:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(78, 204, 163, 0.15);
+}
+
+#inputBox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== 按钮组 ===== */
+.btn-group {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 12px 36px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.btn-start {
+  background: linear-gradient(135deg, var(--accent), #c0392b);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(233, 69, 96, 0.6);
+}
+
+.btn-reset {
+  background: var(--card-bg);
+  color: var(--text-dim);
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.btn-reset:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* ===== 结果弹窗 ===== */
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.result-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.result-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 40px 50px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transform: scale(0.8);
+  transition: transform 0.3s;
+}
+
+.result-overlay.show .result-card {
+  transform: scale(1);
+}
+
+.result-emoji {
+  font-size: 4rem;
+  margin-bottom: 12px;
+}
+
+.result-card h2 {
+  font-size: 1.8rem;
+  color: var(--green);
+  margin-bottom: 24px;
+}
+
+.result-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.r-item {
+  background: var(--panel-bg);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.r-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.r-val {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.r-unit {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.rank-badge {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  display: inline-block;
+}
+
+/* ===== 历史记录 ===== */
+.history-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.history-section h3 {
+  margin-bottom: 16px;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.no-record {
+  color: var(--text-dim);
+  text-align: center;
+  padding: 16px;
+  font-size: 0.9rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel-bg);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.h-rank {
+  font-size: 1.2rem;
+}
+
+.h-wpm {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.h-info {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+/* ===== 底部 ===== */
+footer {
+  margin-top: 30px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.6rem; }
+  .stats-panel { grid-template-columns: repeat(2, 1fr); }
+  .text-display { font-size: 1rem; padding: 18px; }
+  .result-card { padding: 28px 24px; }
+  .result-stats { grid-template-columns: 1fr 1fr; }
+  .difficulty-bar { flex-wrap: wrap; }
+}
+
+/* ===== 闪烁连击效果 ===== */
+.combo-flash {
+  animation: comboFlash 0.3s ease;
+}
+
+@keyframes comboFlash {
+  0% { color: var(--green); transform: scale(1.3); }
+  100% { color: var(--green); transform: scale(1); }
+}

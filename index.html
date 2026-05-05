@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⌨️ 打字速度挑战</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 顶部标题 -->
+  <header>
+    <h1>⌨️ 打字速度挑战</h1>
+    <p class="subtitle">测测你的打字速度，看看你能有多快！</p>
+  </header>
+
+  <!-- 主游戏区域 -->
+  <main>
+
+    <!-- 难度选择 -->
+    <div class="difficulty-bar" id="difficultyBar">
+      <span>难度：</span>
+      <button class="diff-btn active" data-level="easy">🟢 简单</button>
+      <button class="diff-btn" data-level="medium">🟡 中等</button>
+      <button class="diff-btn" data-level="hard">🔴 困难</button>
+    </div>
+
+    <!-- 统计数据 -->
+    <div class="stats-panel">
+      <div class="stat-card">
+        <div class="stat-value" id="wpmDisplay">0</div>
+        <div class="stat-label">WPM 速度</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="accuracyDisplay">100%</div>
+        <div class="stat-label">正确率</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="timerDisplay">60</div>
+        <div class="stat-label">剩余秒数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="comboDisplay">0</div>
+        <div class="stat-label">连击数</div>
+      </div>
+    </div>
+
+    <!-- 进度条 -->
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- 待打字文本展示区 -->
+    <div class="text-display" id="textDisplay"></div>
+
+    <!-- 输入框 -->
+    <div class="input-wrap">
+      <textarea
+        id="inputBox"
+        placeholder="点击这里开始打字……游戏将自动开始计时！"
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        disabled
+      ></textarea>
+    </div>
+
+    <!-- 按钮组 -->
+    <div class="btn-group">
+      <button class="btn btn-start" id="startBtn">🚀 开始游戏</button>
+      <button class="btn btn-reset" id="resetBtn">🔄 重新开始</button>
+    </div>
+
+    <!-- 结果弹窗 -->
+    <div class="result-overlay" id="resultOverlay">
+      <div class="result-card">
+        <div class="result-emoji" id="resultEmoji">🏆</div>
+        <h2 id="resultTitle">挑战完成！</h2>
+        <div class="result-stats">
+          <div class="r-item">
+            <span class="r-label">最终速度</span>
+            <span class="r-val" id="finalWpm">--</span>
+            <span class="r-unit">WPM</span>
+          </div>
+          <div class="r-item">
+            <span class="r-label">正确率</span>
+            <span class="r-val" id="finalAccuracy">--</span>
+            <span class="r-unit">%</span>
+          </div>
+          <div class="r-item">
+            <span class="r-label">正确字符</span>
+            <span class="r-val" id="finalCorrect">--</span>
+            <span class="r-unit">个</span>
+          </div>
+          <div class="r-item">
+            <span class="r-label">错误字符</span>
+            <span class="r-val" id="finalError">--</span>
+            <span class="r-unit">个</span>
+          </div>
+        </div>
+        <div class="rank-badge" id="rankBadge"></div>
+        <button class="btn btn-start" id="playAgainBtn">🔄 再来一局</button>
+      </div>
+    </div>
+
+    <!-- 历史最佳记录 -->
+    <div class="history-section">
+      <h3>📊 历史最佳</h3>
+      <div class="history-list" id="historyList">
+        <p class="no-record">暂无记录，快来挑战吧！</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>💡 提示：WPM（每分钟单词数）是衡量打字速度的国际标准</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
